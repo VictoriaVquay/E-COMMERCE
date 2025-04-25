@@ -79,6 +79,10 @@ A product has many product_attributes
 Each attribute links to a type and category
 
 
+![188ECOMMERCE ERD](https://github.com/user-attachments/assets/2eb9fd8c-aea6-461b-9ed6-8b0b991ad890)
+
+
+
 
 
 
