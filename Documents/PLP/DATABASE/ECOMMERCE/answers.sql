@@ -1,0 +1,222 @@
+--Create a database for an e-commerce platform 
+CREATE DATABASE ECOMMERCE;
+USE ECOMMERCE;
+
+-- Create table for product_image
+CREATE TABLE product_image (
+    image_id INT AUTO_INCREMENT PRIMARY KEY,
+    image_url VARCHAR(255) NOT NULL,
+    product_id INT,
+    FOREIGN KEY (product_id) REFERENCES product(product_id)
+);
+-- Insert sample data into product_image
+INSERT INTO product_image (image_id, product_id, image_url, is_primary) VALUES
+(1, 1, 'airmax90.jpg', TRUE),
+(2, 2, 'galaxys23.jpg', TRUE),
+(3, 3, 'macbookpro.jpg', TRUE),
+(4, 4, 'ultraboost21.jpg', TRUE),
+(5, 5, 'xperiaz5.jpg', TRUE),
+(6, 6, 'xps13.jpg', TRUE),
+(7, 7, 'pumaflyer.jpg', TRUE),
+(8, 8, 'lgfridge.jpg', TRUE);
+
+--Create table for color
+CREATE TABLE color (
+    color_id INT AUTO_INCREMENT PRIMARY KEY,
+    color_name VARCHAR(50) NOT NULL
+);
+-- Insert sample data into color table
+INSERT INTO color (color_id, name, hex_code) VALUES
+(1, 'Black', '#000000'),
+(2, 'White', '#FFFFFF'),
+(3, 'Silver', '#C0C0C0'),
+(4, 'Green', '#008000'),
+(5, 'Red', '#FF0000'),
+(6, 'Blue', '#0000FF'),
+(7, 'Gray', '#808080'),
+(8, 'Gold', '#FFD700');
+
+-- Create table for product_category
+CREATE TABLE product_category (
+    category_id INT AUTO_INCREMENT PRIMARY KEY,
+    category_name VARCHAR(50) NOT NULL
+);
+-- Insert sample data into product_category table
+INSERT INTO product_category (category_id, name, description) VALUES
+(1, 'Clothing', 'Wearable fashion items'),
+(2, 'Electronics', 'Gadgets and devices'),
+(3, 'Shoes', 'Footwear for all genders'),
+(4, 'Laptops', 'Portable computing devices'),
+(5, 'Phones', 'Mobile devices'),
+(6, 'Accessories', 'Watches, bags, belts etc.'),
+(7, 'Home Appliances', 'Household electronics'),
+(8, 'Fitness Gear', 'Equipment and tools for fitness');
+
+-- Create table for product
+CREATE TABLE product (
+    product_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    brand_id INT,
+    base_price DECIMAL(10, 2) NOT NULL,
+    category_id INT,
+    FOREIGN KEY (brand_id) REFERENCES brand(brand_id),
+    FOREIGN KEY (category_id) REFERENCES product_category(category_id)
+);
+-- Insert sample data into product table
+INSERT INTO product (product_id, name, base_price, brand_id, category_id) VALUES
+(1, 'Air Max 90', 120.00, 1, 3),
+(2, 'Galaxy S23', 999.99, 2, 5),
+(3, 'MacBook Pro', 1999.00, 3, 4),
+(4, 'Ultraboost 21', 180.00, 4, 3),
+(5, 'Xperia Z5', 850.00, 5, 5),
+(6, 'XPS 13', 1300.00, 6, 4),
+(7, 'Puma Flyer', 110.00, 7, 3),
+(8, 'LG Smart Fridge', 1800.00, 8, 7);
+
+-- Create table for product_item
+CREATE TABLE product_item (
+    item_id INT AUTO_INCREMENT PRIMARY KEY,
+    product_id INT,
+    variation_id INT,
+    quantity INT NOT NULL,
+    FOREIGN KEY (product_id) REFERENCES product(product_id),
+    FOREIGN KEY (variation_id) REFERENCES product_variation(variation_id)
+);
+-- Insert sample data into product_item table
+INSERT INTO product_item (product_item_id, product_id, sku, stock_quantity, price_override) VALUES
+(1, 1, 'AM90-BLK-42', 50, NULL),
+(2, 2, 'S23-BLK-128', 30, 949.99),
+(3, 3, 'MBP-SILVER-16', 20, NULL),
+(4, 4, 'UB21-WHT-44', 60, NULL),
+(5, 5, 'XZ5-GRN-64', 15, 799.99),
+(6, 6, 'XPS13-GRY-13', 40, NULL),
+(7, 7, 'PF-BLK-42', 35, 99.99),
+(8, 8, 'LG-FRIDGE-XL', 10, NULL);
+
+--Create table for brand
+CREATE TABLE brand (
+    brand_id INT AUTO_INCREMENT PRIMARY KEY,
+    brand_name VARCHAR(100) NOT NULL
+);
+--Insert sample data into brand table
+INSERT INTO brand (brand_id, name, description, logo_url) VALUES
+(1, 'Nike', 'Sportswear brand', 'nike_logo.png'),
+(2, 'Samsung', 'Electronics company', 'samsung_logo.png'),
+(3, 'Apple', 'Tech and electronics company', 'apple_logo.png'),
+(4, 'Adidas', 'Athletic wear and shoes', 'adidas_logo.png'),
+(5, 'Sony', 'Electronics and entertainment', 'sony_logo.png'),
+(6, 'Dell', 'Computer technology company', 'dell_logo.png'),
+(7, 'Puma', 'Sports and casual footwear', 'puma_logo.png'),
+(8, 'LG', 'Home electronics brand', 'lg_logo.png');
+
+--Create table for product_variation
+CREATE TABLE product_variation (
+    variation_id INT AUTO_INCREMENT PRIMARY KEY,
+    product_id INT,
+    size_id INT,
+    color_id INT,
+    FOREIGN KEY (product_id) REFERENCES product(product_id),
+    FOREIGN KEY (size_id) REFERENCES size_option(size_id),
+    FOREIGN KEY (color_id) REFERENCES color(color_id)
+);
+--Insert sample data into product_variation table
+INSERT INTO product_variation (variation_id, product_item_id, color_id, size_option_id) VALUES
+(1, 1, 1, 1),
+(2, 2, 1, 2),
+(3, 3, 3, 3),
+(4, 4, 2, 5),
+(5, 5, 4, 4),
+(6, 6, 7, 6),
+(7, 7, 1, 1),
+(8, 8, 3, 8);
+
+--Create table for size_category
+CREATE TABLE size_category (
+    size_category_id INT AUTO_INCREMENT PRIMARY KEY,
+    category_name VARCHAR(50) NOT NULL
+);
+
+-- Insert sample data into size_category table
+INSERT INTO size_category (size_category_id, name) VALUES
+(1, 'Shoe Size'),
+(2, 'Storage Size'),
+(3, 'Screen Size'),
+(4, 'Capacity'),
+(5, 'Clothing Size'),
+(6, 'RAM'),
+(7, 'Laptop Size'),
+(8, 'Volume');
+
+--Create table for size_option
+CREATE TABLE size_option (
+    size_id INT AUTO_INCREMENT PRIMARY KEY,
+    size_value VARCHAR(10) NOT NULL,
+    size_category_id INT,
+    FOREIGN KEY (size_category_id) REFERENCES size_category(size_category_id)
+);
+--Insert sample data into size_option table
+INSERT INTO size_option (size_option_id, value, size_category_id) VALUES
+(1, '42', 1),
+(2, '128GB', 2),
+(3, '16"', 3),
+(4, '64GB', 2),
+(5, '44', 1),
+(6, '13"', 7),
+(7, '8GB', 6),
+(8, 'XL', 5);
+
+--Create table for product_attribute
+CREATE TABLE product_attribute (
+    attribute_id INT AUTO_INCREMENT PRIMARY KEY,
+    attribute_value VARCHAR(100),
+    attribute_category_id INT,
+    attribute_type_id INT,
+    FOREIGN KEY (attribute_category_id) REFERENCES attribute_category(attribute_category_id),
+    FOREIGN KEY (attribute_type_id) REFERENCES attribute_type(attribute_type_id)
+);
+
+--
+INSERT INTO product_attribute (attribute_id, product_id, name, value, attribute_type_id, attribute_category_id) VALUES
+(1, 1, 'Material', 'Leather', 1, 7),
+(2, 2, 'RAM', '8', 2, 4),
+(3, 3, 'Processor', 'M2 Pro', 1, 4),
+(4, 4, 'Material', 'Mesh', 1, 7),
+(5, 5, 'Battery Life', '24', 2, 6),
+(6, 6, 'Weight', '1.2', 4, 1),
+(7, 7, 'Upper', 'Synthetic', 1, 5),
+(8, 8, 'Capacity', '500L', 1, 1);
+
+--Create table for proatribute_category
+CREATE TABLE attribute_category (
+    attribute_category_id INT AUTO_INCREMENT PRIMARY KEY,
+    category_name VARCHAR(50) NOT NULL
+);
+
+--Insert sample data into attribute_category table
+INSERT INTO attribute_category (attribute_category_id, name) VALUES
+(1, 'Physical'),
+(2, 'Technical'),
+(3, 'Display'),
+(4, 'Performance'),
+(5, 'Design'),
+(6, 'Battery'),
+(7, 'Material'),
+(8, 'Energy Efficiency');
+
+--Create table for attribute_type
+CREATE TABLE attribute_type (
+    attribute_type_id INT AUTO_INCREMENT PRIMARY KEY,
+    type_name VARCHAR(50) NOT NULL
+);
+
+--Insert sample data into attribute_type table
+INSERT INTO attribute_type (attribute_type_id, name) VALUES
+(1, 'Text'),
+(2, 'Number'),
+(3, 'Boolean'),
+(4, 'Decimal'),
+(5, 'Date'),
+(6, 'Enum'),
+(7, 'Image URL'),
+(8, 'JSON');
+
