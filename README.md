@@ -1,88 +1,97 @@
-# E-COMMERCE
 
-1️⃣ ERD: Entities and Relationships
+#  E-COMMERCE DATABASE DESIGN
 
-🏷️ brand
-brand_id (PK)
-name
-description
-logo_url
+## Entity-Relationship Diagram (ERD)
 
-📂 product_category
-category_id (PK)
-name
-description
+###  Brand
+- `brand_id` (PK)  
+- `name`  
+- `description`  
+- `logo_url`  
 
-📦 product
-product_id (PK)
-name
-base_price
-brand_id (FK → brand)
-category_id (FK → product_category)
+###  Product Category
+- `category_id` (PK)  
+- `name`  
+- `description`  
 
-🧾 product_item
-product_item_id (PK)
-product_id (FK → product)
-stock_quantity
-price_override (nullable)
+###  Product
+- `product_id` (PK)  
+- `name`  
+- `base_price`  
+- `brand_id` (FK → Brand)  
+- `category_id` (FK → Product Category)  
 
-🖼️ product_image
-image_id (PK)
-product_id (FK → product)
-image_url
-is_primary (boolean)
+###  Product Item
+- `product_item_id` (PK)  
+- `product_id` (FK → Product)  
+- `stock_quantity`  
+- `price_override` (nullable)  
 
-🎨 color
-color_id (PK)
-name
-hex_code
+###  Product Image
+- `image_id` (PK)  
+- `product_id` (FK → Product)  
+- `image_url`  
+- `is_primary` (boolean)  
 
-🔄 product_variation
-variation_id (PK)
-product_item_id (FK → product_item)
-color_id (FK → color)
-size_option_id (FK → size_option)
+###  Color
+- `color_id` (PK)  
+- `name`  
+- `hex_code`  
 
-📏 size_category
-size_category_id (PK)
-name (e.g., Shoe Sizes, Shirt Sizes)
+###  Product Variation
+- `variation_id` (PK)  
+- `product_item_id` (FK → Product Item)  
+- `color_id` (FK → Color)  
+- `size_option_id` (FK → Size Option)  
 
-📐 size_option
-size_option_id (PK)
-value (e.g., S, M, 42)
-size_category_id (FK → size_category)
+###  Size Category
+- `size_category_id` (PK)  
+- `name` (e.g., Shoe Sizes, Shirt Sizes)  
 
-📚 attribute_category
-attribute_category_id (PK)
-name
+###  Size Option
+- `size_option_id` (PK)  
+- `value` (e.g., S, M, L, 42)  
+- `size_category_id` (FK → Size Category)  
 
-🧪 attribute_type
-attribute_type_id (PK)
-name (e.g., Text, Number, Boolean)
+###  Attribute Category
+- `attribute_category_id` (PK)  
+- `name`  
 
-🧵 product_attribute
-attribute_id (PK)
-product_id (FK → product)
-name
-value
-attribute_type_id (FK → attribute_type)
-attribute_category_id (FK → attribute_category)
+###  Attribute Type
+- `attribute_type_id` (PK)  
+- `name` (e.g., Text, Number, Boolean)  
 
-
-📐 ERD Relationships (Summary)
-A product belongs to one brand and one category
-A product has many product_items
-A product_item has many product_variations
-A product_variation links to one color and one size_option
-A size_option belongs to one size_category
-A product has many product_attributes
-Each attribute links to a type and category
+###  Product Attribute
+- `attribute_id` (PK)  
+- `product_id` (FK → Product)  
+- `name`  
+- `value`  
+- `attribute_type_id` (FK → Attribute Type)  
+- `attribute_category_id` (FK → Attribute Category)  
 
 
-![188ECOMMERCE ERD](https://github.com/user-attachments/assets/2eb9fd8c-aea6-461b-9ed6-8b0b991ad890)
+##  Relationships Summary
+
+- A **product** belongs to one **brand** and one **category**
+- A **product** has many **product_items**
+- A **product_item** has many **product_variations**
+- A **product_variation** links to one **color** and one **size_option**
+- A **size_option** belongs to one **size_category**
+- A **product** has many **product_attributes**
+- Each attribute links to an **attribute_type** and **attribute_category**
 
 
 
+##  ERD Diagram
+
+![E-Commerce ERD](https://github.com/user-attachments/assets/2eb9fd8c-aea6-461b-9ed6-8b0b991ad890)
+
+
+
+## Collaborators
+
+- **Victoria Mwende**  
+- **Paul Mburu**
 
 
 
