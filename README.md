@@ -1,4 +1,4 @@
-![188ECOMMERCE ERD](https://github.com/user-attachments/assets/c388f2c0-e334-47b4-bf3e-34bd4af8240c)# E-COMMERCE
+# E-COMMERCE
 
 1️⃣ ERD: Entities and Relationships
 
@@ -77,6 +77,8 @@ A product_variation links to one color and one size_option
 A size_option belongs to one size_category
 A product has many product_attributes
 Each attribute links to a type and category
+
+
 
 
 
